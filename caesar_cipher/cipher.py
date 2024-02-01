@@ -1,6 +1,6 @@
 import nltk
 import re
-from corpus_loader import word_list, name_list
+from caesar_cipher.corpus_loader import word_list, name_list
 
 def encrypt(plain, shift):
   encrypted_text = ""
@@ -35,18 +35,30 @@ def crack(encrypted_text):
   cracked_text = ""
   for i in range(65):
     decrypted_subject = decrypt(encrypted_text, i)
-    words = re.sub(r'[^A-Za-z]+',' ', decrypted_subject)
-    shift += 1
-    print(words)
-    for word in words:
-      if word.lower() in word_list or word in name_list:
+
+    possible_words = decrypted_subject.split()
+    for word in possible_words:
+      cleaned_word = re.sub(r'[^A-Za-z]+','', word)
+      if cleaned_word.lower() in word_list or cleaned_word in name_list:
         word_count += 1
-        print(word_count)
+        # print(cleaned_word)
+
+    percentage = int(word_count / len(possible_words) * 100)
+
+    if percentage >= 70:
+      return decrypted_subject
+ 
+  return ""
     # if decrypted_word.lower() in word_list or decrypted_word in name_list:
     #   cracked_text += decrypted_word
     #   print(word_count)
   
     # for decrypted_word in words:
+        
+
+# def is_english(decrypted_text):
+
+#   return 
 
 if __name__ == "__main__":
   sample = "AAAA"
