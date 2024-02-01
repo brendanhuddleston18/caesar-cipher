@@ -1,5 +1,5 @@
 import pytest
-from caesar_cipher import encrypt, decrypt, crack
+from caesar_cipher.cipher import encrypt, decrypt, crack
 
 """
 place in your projects tests folder
@@ -57,7 +57,7 @@ def test_crack_phrase():
     expected = phrase
     assert actual == expected
 
-@pytest.mark.skip
+# @pytest.mark.skip
 def test_crack_nonsense():
     phrase = "Ix fhw txe fofg of ndhrl, it nad tho hndrk of allkd."
     encrypted = encrypt(phrase, 10)
