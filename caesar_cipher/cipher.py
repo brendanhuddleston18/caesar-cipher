@@ -29,36 +29,27 @@ def encrypt(plain, shift):
 def decrypt(encrypted_text, shift):
   return encrypt(encrypted_text, -shift)
 
+
 def crack(encrypted_text):
   shift= 0
   word_count = 0
   cracked_text = ""
-  for i in range(65):
+  for i in range(26):
     decrypted_subject = decrypt(encrypted_text, i)
+    words = re.sub(r'[^A-Za-z]+',' ', decrypted_subject).split()
+    current_word_count = 0
+    for word in words:
+      if word.lower() in word_list or word in name_list:
+       current_word_count += 1
 
-    possible_words = decrypted_subject.split()
-    for word in possible_words:
-      cleaned_word = re.sub(r'[^A-Za-z]+','', word)
-      if cleaned_word.lower() in word_list or cleaned_word in name_list:
-        word_count += 1
-        # print(cleaned_word)
+    if current_word_count > word_count:
+      word_count = current_word_count
+      cracked_text = decrypted_subject
 
-    percentage = int(word_count / len(possible_words) * 100)
-
-    if percentage >= 70:
-      return decrypted_subject
- 
-  return ""
-    # if decrypted_word.lower() in word_list or decrypted_word in name_list:
-    #   cracked_text += decrypted_word
-    #   print(word_count)
-  
-    # for decrypted_word in words:
-        
-
-# def is_english(decrypted_text):
-
-#   return 
+  if word_count > (len(words)/2):
+    return cracked_text
+  else:
+    return ''
 
 if __name__ == "__main__":
   sample = "AAAA"
